@@ -1,0 +1,134 @@
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.form-header {
+  background: var(--success-color);
+  color: var(--text-white);
+  padding: 1.5rem 2rem;
+  border-bottom: none;
+}
+
+.form-header.bg-warning {
+  background: var(--warning-color);
+  color: var(--text-primary);
+}
+
+.form-body {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.form-control,
+.form-select {
+  border-radius: var(--border-radius);
+  border: 2px solid #666666 !important;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all var(--transition);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(155, 181, 55, 0.25);
+  background: var(--bg-secondary);
+  outline: none;
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: var(--primary-light);
+}
+
+textarea.form-control {
+  min-height: 120px;
+}
+
+textarea.form-control[rows="8"] {
+  min-height: 200px;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--danger-color);
+  animation: shake 0.5s ease-in-out;
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+  border-color: var(--success-color);
+}
+
+.form-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+.text-success {
+  color: var(--success-color) !important;
+}
+
+.form-text .text-success {
+  color: var(--success-color) !important;
+}
+
+#ingredient-counter {
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  background: rgba(155, 181, 55, 0.1);
+  border: 1px solid rgba(155, 181, 55, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding: 1.5rem 2rem;
+  background: var(--bg-gray);
+  border-top: 1px solid var(--border-light);
+}
+
+.form-actions .btn {
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    margin: 0 1rem;
+  }
+
+  .form-body {
+    padding: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    padding: 1.5rem;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}

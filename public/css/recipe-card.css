@@ -1,0 +1,104 @@
+.recipe-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  background: var(--bg-secondary);
+}
+
+.recipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.recipe-card-loading {
+  opacity: 0.8;
+  transform: scale(0.95) !important;
+}
+
+.recipe-card .card-header {
+  background: transparent;
+  border: none;
+  position: relative;
+  z-index: 2;
+}
+
+.recipe-card .card-body {
+  position: relative;
+  z-index: 2;
+}
+
+.recipe-card .card-footer {
+  background: var(--bg-gray);
+  border: none;
+  position: relative;
+  z-index: 2;
+}
+
+.recipe-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.recipe-rating .fa-star {
+  color: var(--accent-color);
+}
+
+.ingredient-preview li {
+  transition: color 0.2s ease;
+}
+
+.quick-stat {
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.card-footer .btn {
+  position: relative;
+  z-index: 5;
+}
+
+.recipe-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(42, 42, 42, 0.9);
+  z-index: 10;
+  border-radius: inherit;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .recipe-card:hover {
+    transform: translateY(-2px) !important;
+  }
+
+  .quick-stat small {
+    font-size: 0.7rem;
+  }
+
+  .ingredient-preview {
+    max-height: 120px;
+    overflow: hidden;
+  }
+}

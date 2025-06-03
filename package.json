@@ -1,0 +1,22 @@
+{
+  "name": "snacksnap",
+  "version": "1.0.0",
+  "description": "Digital cookbook application for your recipes",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "izitoast": "^1.4.0",
+    "mongodb": "^6.16.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

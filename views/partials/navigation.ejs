@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg bg-success">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <i class="fas fa-utensils me-2"></i>
+      SnackSnap
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <% menuLinks.forEach(function(link) { %>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= activeLinkPath === link.path ? 'active' : '' %>"
+            href="<%= link.path %>"
+          >
+            <%= link.label %>
+          </a>
+        </li>
+        <% }); %>
+      </ul>
+
+      <form class="d-flex" action="/recipes" method="GET">
+        <input
+          class="form-control me-2"
+          type="search"
+          name="search"
+          placeholder="Szukaj przepisów..."
+          style="min-width: 200px"
+        />
+        <button class="btn btn-outline-light" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>

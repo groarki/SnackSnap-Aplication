@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= headTitle %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Основні CSS файли -->
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/layout.css" rel="stylesheet" />
+    <link href="/css/components.css" rel="stylesheet" />
+
+    <!-- CSS для конкретної сторінки -->
+    <link href="/css/recipe-details.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('partials/navigation', { menuLinks: menuLinks, activeLinkPath:
+    activeLinkPath }); %>
+
+    <main class="container mt-4">
+      <!-- Кнопка повернення -->
+      <div class="back-button">
+        <a href="/recipes" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i>
+          Powrót do listy przepisów
+        </a>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="recipe-content shadow">
+            <div class="recipe-details-header">
+              <div
+                class="d-flex justify-content-between align-items-start mb-3"
+              >
+                <h1 class="mb-0"><%= recipe.name %></h1>
+                <span class="badge recipe-category-badge fs-6">
+                  <%= recipe.category %>
+                </span>
+              </div>
+              <div class="recipe-meta">
+                <div class="d-flex flex-wrap gap-3">
+                  <span>
+                    <i class="fas fa-user me-1"></i>
+                    <%= recipe.author %>
+                  </span>
+                  <span>
+                    <i class="fas fa-calendar me-1"></i>
+                    <%= new Date(recipe.createdAt).toLocaleDateString('pl-PL')
+                    %>
+                  </span>
+                  <span>
+                    <i class="fas fa-list me-1"></i>
+                    <%= recipe.ingredients.length %> składników
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 ingredients-section">
+                <h4 class="section-title">
+                  <i class="fas fa-list-ul me-2"></i>
+                  Składniki
+                </h4>
+                <ul class="ingredients-list list-group list-group-flush">
+                  <% recipe.ingredients.forEach(function(ingredient) { %>
+                  <li class="list-group-item">
+                    <i class="fas fa-check"></i>
+                    <%= ingredient %>
+                  </li>
+                  <% }); %>
+                </ul>
+              </div>
+
+              <div class="col-md-6 instructions-section">
+                <h4 class="section-title">
+                  <i class="fas fa-clipboard-list me-2"></i>
+                  Instrukcje przygotowania
+                </h4>
+                <div class="instructions">
+                  <p><%= recipe.instructions %></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Кнопки дій -->
+            <div class="action-buttons">
+              <a href="/recipes/<%= recipe.id %>/edit" class="btn btn-warning">
+                <i class="fas fa-edit me-1"></i>
+                Edytuj przepis
+              </a>
+              <button
+                type="button"
+                class="btn btn-danger"
+                onclick="deleteRecipe('<%= recipe.id %>', '<%= recipe.name %>')"
+              >
+                <i class="fas fa-trash me-1"></i>
+                Usuń przepis
+              </button>
+              <a href="/recipes" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Powrót do listy
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar з додатковою інформацією -->
+        <div class="col-md-4">
+          <!-- Інформація про рецепт -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <i class="fas fa-info-circle me-2"></i>
+                Informacje o przepisie
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="recipe-stats">
+                <div class="stat-item">
+                  <strong>Kategoria:</strong> <%= recipe.category %>
+                </div>
+                <div class="stat-item">
+                  <strong>Autor:</strong> <%= recipe.author %>
+                </div>
+                <div class="stat-item">
+                  <strong>Data dodania:</strong> <%= new
+                  Date(recipe.createdAt).toLocaleDateString('pl-PL') %>
+                </div>
+                <div class="stat-item">
+                  <strong>Liczba składników:</strong> <%=
+                  recipe.ingredients.length %>
+                </div>
+                <div class="stat-item">
+                  <strong>Średnia ocena:</strong>
+                  <span class="text-warning">
+                    <%= recipe.getAverageRating() %> <i class="fas fa-star"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rейтинги та форма -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <i class="fas fa-star me-2"></i>
+                Oceny
+              </h5>
+            </div>
+            <div class="card-body">
+              <!-- Відображення поточного рейтингу -->
+              <% if (recipe.ratings && recipe.ratings.length > 0) { %>
+              <div class="rating-display text-center mb-3">
+                <div class="rating-score h2 text-warning mb-2">
+                  <%= recipe.getAverageRating() %>
+                </div>
+                <div class="rating-stars mb-2">
+                  <% for(let i = 1; i <= 5; i++) { %>
+                  <i
+                    class="fas fa-star <%= parseFloat(recipe.getAverageRating()) >= i ? 'text-warning' : 'text-muted' %>"
+                  ></i>
+                  <% } %>
+                </div>
+                <small class="text-muted"
+                  >z <%= recipe.ratings.length %> ocen</small
+                >
+              </div>
+              <hr />
+              <% } %>
+
+              <!-- Форма додавання рейтингу -->
+              <h6 class="mb-3">Oceń ten przepis:</h6>
+              <form
+                action="/recipes/<%= recipe.id %>/rating"
+                method="POST"
+                class="compact-form"
+              >
+                <div class="mb-3">
+                  <label for="score" class="form-label">Ocena:</label>
+                  <select
+                    class="form-select form-select-sm"
+                    id="score"
+                    name="score"
+                    required
+                  >
+                    <option value="">Wybierz ocenę</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Doskonały</option>
+                    <option value="4">⭐⭐⭐⭐ Bardzo dobry</option>
+                    <option value="3">⭐⭐⭐ Dobry</option>
+                    <option value="2">⭐⭐ Słaby</option>
+                    <option value="1">⭐ Bardzo słaby</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="comment" class="form-label">Komentarz:</label>
+                  <textarea
+                    class="form-control form-control-sm"
+                    id="comment"
+                    name="comment"
+                    rows="3"
+                    placeholder="Twoje uwagi..."
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-warning btn-sm w-100">
+                  <i class="fas fa-star me-1"></i>
+                  Dodaj ocenę
+                </button>
+              </form>
+
+              <!-- Lista istniejących ocen -->
+              <% if (recipe.ratings && recipe.ratings.length > 0) { %>
+              <hr />
+              <h6 class="mb-3">Ostatnie oceny:</h6>
+              <div
+                class="ratings-list"
+                style="max-height: 200px; overflow-y: auto"
+              >
+                <% recipe.ratings.slice(-3).reverse().forEach(function(rating) {
+                %>
+                <div class="rating-item-small mb-2 p-2 border rounded">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="rating-stars-small">
+                      <% for(let i = 1; i <= 5; i++) { %>
+                      <i
+                        class="fas fa-star <%= rating.score >= i ? 'text-warning' : 'text-muted' %>"
+                        style="font-size: 0.8rem"
+                      ></i>
+                      <% } %>
+                    </div>
+                    <small class="text-muted"
+                      ><%= new
+                      Date(rating.createdAt).toLocaleDateString('pl-PL')
+                      %></small
+                    >
+                  </div>
+                  <% if (rating.comment && rating.comment.trim()) { %>
+                  <small class="text-secondary mt-1 d-block"
+                    ><%= rating.comment %></small
+                  >
+                  <% } %>
+                </div>
+                <% }); %>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('partials/footer'); %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
