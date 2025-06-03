@@ -40,6 +40,14 @@
 * {
   box-sizing: border-box;
 }
+html,
+body {
+  height: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
 
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -48,6 +56,9 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   transition: background-color var(--transition), color var(--transition);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1,
@@ -82,6 +93,10 @@ a:hover {
   color: var(--primary-light);
 }
 
+footer {
+  flex-shrink: 0;
+  margin-top: auto;
+}
 .loading {
   display: inline-block;
   width: 20px;

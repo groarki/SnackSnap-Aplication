@@ -90,31 +90,73 @@ function deleteRecipe(recipeId, recipeName) {
             timeout: false,
             progressBar: false,
             close: false,
+            id: "deleting",
           });
-
           fetch(`/recipes/${recipeId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
           })
-            .then((response) => response.json())
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
             .then((data) => {
-              iziToast.destroy();
+              iziToast.hide({}, document.getElementById("deleting"));
 
               if (data.success) {
-                toast.success("Przepis został usunięty pomyślnie");
-                setTimeout(() => {
-                  window.location.href = "/recipes";
-                }, 1500);
+                iziToast.success({
+                  title: "Sukces",
+                  message: "Przepis został usunięty pomyślnie",
+                  position: "topRight",
+                  timeout: 3000,
+                });
+
+                const recipeCard = document.querySelector(
+                  `[data-recipe-id="${recipeId}"]`
+                );
+
+                if (recipeCard) {
+                  recipeCard.style.transition = "all 0.3s ease";
+                  recipeCard.style.transform = "scale(0.8)";
+                  recipeCard.style.opacity = "0";
+
+                  setTimeout(() => {
+                    recipeCard.remove();
+
+                    const remainingRecipes =
+                      document.querySelectorAll(".recipe-card");
+
+                    if (remainingRecipes.length === 0) {
+                      showEmptyState();
+                    }
+                  }, 300);
+                } else {
+                  setTimeout(() => {
+                    window.location.href = "/recipes";
+                  }, 1500);
+                }
               } else {
-                toast.error("Błąd podczas usuwania przepisu");
+                iziToast.error({
+                  title: "Błąd",
+                  message: data.error || "Błąd podczas usuwania przepisu",
+                  position: "topRight",
+                  timeout: 4000,
+                });
               }
             })
             .catch((error) => {
-              iziToast.destroy();
-              console.error("Error:", error);
-              toast.error("Błąd podczas usuwania przepisu");
+              iziToast.hide({}, document.getElementById("deleting"));
+
+              iziToast.error({
+                title: "Błąd",
+                message: "Błąd podczas usuwania przepisu",
+                position: "topRight",
+                timeout: 4000,
+              });
             });
         },
         true,
@@ -127,6 +169,25 @@ function deleteRecipe(recipeId, recipeName) {
       ],
     ],
   });
+}
+
+function showEmptyState() {
+  const recipesGrid = document.querySelector(".recipes-grid");
+  if (recipesGrid) {
+    recipesGrid.innerHTML = `
+      <div class="col-12">
+        <div class="empty-recipes-state">
+          <i class="fas fa-search fa-4x"></i>
+          <h3>Brak przepisów</h3>
+          <p>Nie ma jeszcze żadnych przepisów w bazie danych.</p>
+          <a href="/recipes/add" class="btn btn-success btn-lg">
+            <i class="fas fa-plus me-2"></i>
+            Dodaj pierwszy przepis
+          </a>
+        </div>
+      </div>
+    `;
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

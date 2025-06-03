@@ -215,18 +215,34 @@ class RecipeController {
 
   static async deleteRecipe(req, res) {
     try {
-      const deleted = await RecipeModel.deleteById(req.params.id);
+      const recipeId = req.params.id;
 
-      if (!deleted) {
-        return res.status(404).json({ error: "Przepis nie znaleziony" });
+      const existingRecipe = await RecipeModel.findById(recipeId);
+      if (!existingRecipe) {
+        return res.status(404).json({
+          success: false,
+          error: "Przepis nie znaleziony",
+        });
       }
 
-      res.json({ success: true });
+      const deleted = await RecipeModel.deleteById(recipeId);
+
+      if (deleted) {
+        return res.json({
+          success: true,
+          message: "Przepis został usunięty pomyślnie",
+        });
+      } else {
+        return res.status(500).json({
+          success: false,
+          error: "Nie udało się usunąć przepisu",
+        });
+      }
     } catch (error) {
-      console.error("Error deleting recipe:", error);
-      res
-        .status(500)
-        .json({ error: "Wystąpił błąd podczas usuwania przepisu" });
+      res.status(500).json({
+        success: false,
+        error: "Wystąpił błąd podczas usuwania przepisu",
+      });
     }
   }
 
