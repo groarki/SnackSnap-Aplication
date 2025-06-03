@@ -91,7 +91,7 @@
                   Instrukcje przygotowania
                 </h4>
                 <div class="instructions">
-                  <p><%= recipe.instructions %></p>
+                  <p><%- recipe.instructions.replace(/\n/g, '<br />') %></p>
                 </div>
               </div>
             </div>

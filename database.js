@@ -4,7 +4,11 @@ const { MONGODB_URI, DB_NAME } = require("./config");
 let database;
 
 const mongoConnect = (callback) => {
-  MongoClient.connect(MONGODB_URI)
+  MongoClient.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+  })
     .then((client) => {
       console.log("Successfully connected to MongoDB!");
       database = client.db(DB_NAME);
@@ -12,7 +16,10 @@ const mongoConnect = (callback) => {
     })
     .catch((error) => {
       console.error("MongoDB connection error:", error);
-      process.exit(1);
+      setTimeout(() => {
+        console.log("Retrying connection...");
+        mongoConnect(callback);
+      }, 5000);
     });
 };
 

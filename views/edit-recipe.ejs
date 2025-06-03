@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label for="instructions" class="form-label">Instrukcje przygotowania *</label>
                             <textarea class="form-control" id="instructions" name="instructions" rows="8" required 
-                                      placeholder="Opisz krok po kroku jak przygotować danie..."><%= recipe.instructions %></textarea>
+                                      placeholder="Opisz krok po kroku jak przygotować danie..."><%- recipe.instructions.replace(/\n/g, '<br>') %></textarea>
                         </div>
                     </form>
                 </div>
