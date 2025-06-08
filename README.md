@@ -16,19 +16,25 @@ SnackSnap to aplikacja webowa umożliwiająca użytkownikom tworzenie i zarządz
 
 - Node.js (wersja 16+)
 - MongoDB Atlas lub lokalna instancja MongoDB
-- NPM lub Yarn
+- NPM
 
 ## Instalacja i uruchomienie
 
 1. Sklonuj repozytorium: `git clone`
 2. Zainstaluj zależności: `npm install`
-3. W przypadku podłączenia do nowej bazy danych wymień link w pliku `config.js` poprzez wklejanie linku z MongoDB oraz wymień następujące dane usera w pliku `.env`:
+3. Uzupełni następujące dane usera w pliku `.env`:
 
 - DB_USER=twojuser
 - DB_PASS=twojehaslo
+- DB_NAME=nazwaklastera
 
-4. Uruchom aplikację przy pomocy poleceń `npm start` lub `npm run dev`
-5. Otwórz przeglądarkę: `http://localhost:3000`
+4. Dla podłączenia do nowej bazy danych wymień link w pliku `config.js` poprzez wklejanie własnego linku z MongoDB
+5. Wklej hasło i usera w miejsca wskazane w linku
+6. Zmienną DB_NAME wklej w to miejsce:
+   ....mongodb.net/**${DB_NAME}**?retryWrites...
+
+7. Uruchom aplikację przy pomocy poleceń `npm start` lub `npm run dev`
+8. Otwórz przeglądarkę: `http://localhost:3000`
 
 ## Struktura aplikacji
 

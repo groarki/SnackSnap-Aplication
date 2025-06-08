@@ -5,8 +5,6 @@ let database;
 
 const mongoConnect = (callback) => {
   MongoClient.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
   })
     .then((client) => {
