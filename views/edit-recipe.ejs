@@ -37,7 +37,7 @@
                     </div>
                     <% } %>
 
-                    <form action="/recipes/<%= recipe.id %>/edit" method="POST" id="edit-recipe-form">
+                    <form action="/recipes/<%= recipe.id %>" method="POST" id="edit-recipe-form">
                         <div class="form-group">
                             <label for="name" class="form-label">Nazwa przepisu *</label>
                             <input type="text" class="form-control" id="name" name="name" 
