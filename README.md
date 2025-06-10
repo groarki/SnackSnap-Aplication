@@ -28,8 +28,14 @@ SnackSnap to aplikacja webowa umożliwiająca użytkownikom tworzenie i zarządz
 - DB_PASS=twojehaslo
 - DB_NAME=nazwaklastera
 
-4. Dla podłączenia do nowej bazy danych wymień link w pliku `config.js` poprzez wklejanie własnego linku z MongoDB
+4. Dla podłączenia do nowej bazy danych wklej "connection string" do **MONGODB_URI** W pliku `config.js`
+
+Connection string weżmiesz w zakladce "Connect" -> "Drivers"
+
 5. Wklej hasło i usera w miejsca wskazane w linku
+
+Wszystkie zmienne przekazuj jako template string
+
 6. Zmienną DB_NAME wklej w to miejsce:
    ....mongodb.net/**${DB_NAME}**?retryWrites...
 
